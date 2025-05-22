@@ -1,3 +1,4 @@
+using System.Reflection;
 using JobBoard.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,7 @@ namespace JobBoard.Web
                 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString, optBuilder =>
                 {
-                    optBuilder.MigrationsAssembly(nameof(Infrastructure));
+                    optBuilder.MigrationsAssembly(typeof(JobBoardDbContext).Assembly.GetName().Name);
                 });
             });
 

@@ -11,7 +11,6 @@ namespace JobBoard.Infrastructure
         public DbSet<Admin> Admins { get; set; }
         public DbSet<JobVacancy> JobVacancies { get; set; }
         public DbSet<JobApplication> JobApplications { get; set; }
-        public DbSet<SalaryType> SalaryTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

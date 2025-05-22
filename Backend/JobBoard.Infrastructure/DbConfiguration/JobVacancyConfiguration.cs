@@ -8,11 +8,11 @@ namespace JobBoard.Infrastructure.DbConfiguration
     {
         public void Configure(EntityTypeBuilder<JobVacancy> builder)
         {
+            builder.Property(j => j.SalaryType)
+                .HasConversion<string>();
+
             builder.HasOne(jv => jv.Company)
                 .WithMany(c => c.JobVacancies)
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.HasOne(jv => jv.SalaryType)
-                .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
