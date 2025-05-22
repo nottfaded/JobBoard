@@ -16,7 +16,10 @@ namespace JobBoard.Web
             builder.Services.AddDbContext<JobBoardDbContext>(options =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString, optBuilder =>
+                {
+                    optBuilder.MigrationsAssembly(nameof(Infrastructure));
+                });
             });
 
             var app = builder.Build();
