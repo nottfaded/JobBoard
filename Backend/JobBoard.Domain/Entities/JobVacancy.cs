@@ -13,5 +13,6 @@
         public bool IsActive { get; set; } = true;
         public Company Company { get; set; } = null!;
         public SalaryType SalaryType { get; set; } = null!;
+        public ICollection<JobApplication> JobApplications { get; set; } = new List<JobApplication>();
     }
 }
