@@ -9,7 +9,7 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
     public void Configure(EntityTypeBuilder<Account> builder)
     {
         builder.ToTable("Account")
-            .HasDiscriminator<string>("AccountType")
+            .HasDiscriminator<string>("Role")
             .HasValue<User>("User")
             .HasValue<Company>("Company")
             .HasValue<Admin>("Admin");

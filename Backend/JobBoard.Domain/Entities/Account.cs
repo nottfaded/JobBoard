@@ -1,4 +1,6 @@
-﻿namespace JobBoard.Domain.Entities
+﻿using JobBoard.Domain.Enums;
+
+namespace JobBoard.Domain.Entities
 {
     public abstract class Account
     {
