@@ -24,15 +24,13 @@ namespace JobBoard.Infrastructure.Migrations
 
             modelBuilder.Entity("JobBoard.Domain.Entities.Account", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -44,6 +42,9 @@ namespace JobBoard.Infrastructure.Migrations
                         .HasColumnType("nvarchar(8)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Account", (string)null);
 
@@ -69,8 +70,8 @@ namespace JobBoard.Infrastructure.Migrations
                     b.Property<int>("JobVacancyId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -92,8 +93,8 @@ namespace JobBoard.Infrastructure.Migrations
                     b.Property<long>("Bet")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

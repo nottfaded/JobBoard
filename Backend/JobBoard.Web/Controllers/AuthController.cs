@@ -66,6 +66,7 @@ public class AuthController(IAuthService authServ) : ControllerBase
 
         var claims = new List<Claim>
         {
+            new(ClaimTypes.NameIdentifier, account.Id.ToString()),
             new(ClaimTypes.Email, account.Email),
             new(ClaimTypes.Role, account.GetRole().ToString())
         };
@@ -75,8 +76,16 @@ public class AuthController(IAuthService authServ) : ControllerBase
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
-        HttpContext.Session.SetString("email", account.Email);
+        HttpContext.Session.SetString(nameof(account.Id), account.Id.ToString());
 
         return Ok("Login successful");
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        HttpContext.Session.Clear();
+        return Ok("Logout successful");
     }
 }

@@ -63,6 +63,7 @@ public class Program
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession(options =>
         {
+            options.Cookie.Name = ".JobBoard.Session";
             options.IdleTimeout = TimeSpan.FromHours(1);
             //options.Cookie.HttpOnly = true;
             //options.Cookie.IsEssential = true;

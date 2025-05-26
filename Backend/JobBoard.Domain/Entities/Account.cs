@@ -1,11 +1,11 @@
-﻿using JobBoard.Domain.Enums;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace JobBoard.Domain.Entities
+namespace JobBoard.Domain.Entities;
+
+public abstract class Account
 {
-    public abstract class Account
-    {
-        public int Id { get; set; }
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-    }
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }

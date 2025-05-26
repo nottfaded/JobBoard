@@ -13,5 +13,11 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
             .HasValue<User>("User")
             .HasValue<Company>("Company")
             .HasValue<Admin>("Admin");
+
+        builder.Property(a => a.Id)
+            .ValueGeneratedOnAdd();
+
+        builder.HasIndex(a => a.Email)
+            .IsUnique();
     }
 }
