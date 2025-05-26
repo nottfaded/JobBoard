@@ -4,7 +4,7 @@ using JobBoard.Application.Features;
 
 namespace JobBoard.Infrastructure.Services;
 
-internal class EditProfileService(JobBoardDbContext dbContext) : IEditProfileService
+public class EditProfileService(JobBoardDbContext dbContext) : IEditProfileService
 {
     public async Task UpdateUserAsync(Guid userId, EditUserProfileDto dto)
     {
@@ -17,7 +17,7 @@ internal class EditProfileService(JobBoardDbContext dbContext) : IEditProfileSer
         user.Email = dto.Email;
         user.PhoneNumber = dto.PhoneNumber;
         user.CvPath = dto.CvPath;
-
+        
         await dbContext.SaveChangesAsync();
     }
 

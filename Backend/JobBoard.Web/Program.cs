@@ -26,12 +26,22 @@ public class Program
         builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
             {
-                //options.LoginPath = "/account/login";
-                //options.LogoutPath = "/account/logout";
-                //options.AccessDeniedPath = "/account/accessDenied";
                 options.ExpireTimeSpan = TimeSpan.FromDays(3);
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = 403;
+                    return Task.CompletedTask;
+                };
+
             });
+
         builder.Services.AddEndpointsApiExplorer();
+
         builder.Services.AddSwaggerGen(options =>
         {
             options.AddSecurityDefinition("cookieAuth", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -63,13 +73,15 @@ public class Program
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession(options =>
         {
-            options.Cookie.Name = ".JobBoard.Session";
             options.IdleTimeout = TimeSpan.FromHours(1);
             //options.Cookie.HttpOnly = true;
             //options.Cookie.IsEssential = true;
         });
 
         builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<IEditProfileService, EditProfileService>();
+        builder.Services.AddScoped<IVacancyService, VacancyService>();
+        builder.Services.AddScoped<ICompanyService, CompanyService>();
 
         var app = builder.Build();
 
@@ -88,6 +100,10 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            using var scope = app.Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<JobBoardDbContext>();
+            DbInitializer.Seed(context);
         }
 
         app.MapControllers();
