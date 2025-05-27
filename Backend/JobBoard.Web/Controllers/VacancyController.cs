@@ -15,15 +15,8 @@ public class VacancyController(IVacancyService vacancyServ) : ControllerBase
     [Authorize(Roles = nameof(AccountRole.Company))]
     public async Task<IActionResult> CreateVacancy([FromBody] CreateVacancyDto dto)
     {
-        try
-        {
-            var companyId = HttpContext.User.GetAccountId();
-            await vacancyServ.CreateAsync(companyId, dto);
-        }
-        catch(Exception ex)
-        {
-            return BadRequest($"Error creating vacancy: {ex.Message}");
-        }
+        var companyId = HttpContext.User.GetAccountId();
+        await vacancyServ.CreateAsync(companyId, dto);
 
         return Ok("Vacancy created successfully");
     }
@@ -32,16 +25,9 @@ public class VacancyController(IVacancyService vacancyServ) : ControllerBase
     [Authorize(Roles = nameof(AccountRole.Company))]
     public async Task<IActionResult> EditVacancy([FromBody] EditVacancyDto dto)
     {
-        try
-        {
-            var companyId = HttpContext.User.GetAccountId();
+        var companyId = HttpContext.User.GetAccountId();
+        await vacancyServ.EditAsync(companyId, dto);
 
-            await vacancyServ.EditAsync(companyId, dto);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
         return Ok("Vacancy edited successfully");
     }
 
@@ -49,16 +35,9 @@ public class VacancyController(IVacancyService vacancyServ) : ControllerBase
     [Authorize(Roles = nameof(AccountRole.Company))]
     public async Task<IActionResult> DeleteVacancy([FromRoute] int vacancyId)
     {
-        try
-        {
-            var companyId = HttpContext.User.GetAccountId();
+        var companyId = HttpContext.User.GetAccountId();
+        await vacancyServ.DeleteAsync(companyId, vacancyId);
 
-            await vacancyServ.DeleteAsync(companyId, vacancyId);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
         return Ok("Vacancy deleted successfully");
     }
 }

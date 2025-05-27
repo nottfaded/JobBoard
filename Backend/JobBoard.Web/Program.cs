@@ -5,6 +5,7 @@ using JobBoard.Application.Validators;
 using JobBoard.Application.Validators.AuthDTOs;
 using JobBoard.Infrastructure;
 using JobBoard.Infrastructure.Services;
+using JobBoard.Web.Middlewares;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -102,6 +103,8 @@ public class Program
         app.UseSession();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         if (app.Environment.IsDevelopment())
         {

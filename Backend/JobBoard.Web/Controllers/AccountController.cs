@@ -16,14 +16,8 @@ public class AccountController(IEditProfileService editServ) : ControllerBase
     [Authorize(Roles = nameof(AccountRole.User))]
     public async Task<IActionResult> EditUserProfile([FromBody] EditUserProfileDto dto)
     {
-        try
-        {
-            var userId = HttpContext.User.GetAccountId();
-            await editServ.UpdateUserAsync(userId, dto);
-        } catch(Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var userId = HttpContext.User.GetAccountId();
+        await editServ.UpdateUserAsync(userId, dto);
 
         return Ok("Profile updated successfully");
     }
@@ -32,15 +26,8 @@ public class AccountController(IEditProfileService editServ) : ControllerBase
     [Authorize(Roles = nameof(AccountRole.Company))]
     public async Task<IActionResult> EditCompanyProfile([FromBody] EditCompanyProfileDto dto)
     {
-        try
-        {
-            var companyId = HttpContext.User.GetAccountId();
-            await editServ.UpdateCompanyAsync(companyId, dto);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var companyId = HttpContext.User.GetAccountId();
+        await editServ.UpdateCompanyAsync(companyId, dto);
 
         return Ok("Profile updated successfully");
     }

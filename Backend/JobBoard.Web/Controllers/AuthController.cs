@@ -25,10 +25,6 @@ public class AuthController(IAuthService authServ) : ControllerBase
         {
             return Conflict(ex.Message);
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
         return Ok("Registration successful");
     }
 
@@ -43,26 +39,13 @@ public class AuthController(IAuthService authServ) : ControllerBase
         {
             return Conflict(ex.Message);
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
         return Ok("Registration successful");
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        Account account;
-
-        try
-        {
-            account = await authServ.LoginAsync(request);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var account = await authServ.LoginAsync(request);
 
         var claims = new List<Claim>
         {
