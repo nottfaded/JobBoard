@@ -1,4 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using JobBoard.Application.Features;
+using JobBoard.Application.Validators;
+using JobBoard.Application.Validators.AuthDTOs;
 using JobBoard.Infrastructure;
 using JobBoard.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -69,6 +73,9 @@ public class Program
         });
 
         builder.Services.AddControllers();
+
+        builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidation>();
+        builder.Services.AddFluentValidationAutoValidation();
 
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddSession(options =>

@@ -20,4 +20,6 @@ internal class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.HasIndex(a => a.Email)
             .IsUnique();
     }
+
+    //TODO: add method for configuration validation
 }
